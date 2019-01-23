@@ -1,0 +1,27 @@
+{
+  "name": "mern-students-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rampratts/MERN-students-manager.git"
+  },
+  "author": "Ramiro Meneses",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rampratts/MERN-students-manager/issues"
+  },
+  "homepage": "https://github.com/rampratts/MERN-students-manager#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.9"
+  }
+}
