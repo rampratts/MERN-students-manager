@@ -22,22 +22,28 @@ export default class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="navbarColor01">
                             <ul className="navbar-nav ml-auto">
                                 {store.state.loggedIn ? (
-                                    <li className="nav-item active">
-                                        <Link className="nav-link" to="#">{store.state.userName}</Link>
-                                    </li>
-                                ) : null}
-                                <li className="nav-item active">
-                                    <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/login" className="nav-link" href="#!">Login</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/register" className="nav-link" href="#!">Register</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/logout" onClick={(e) => this.handleLogout(e, store)} className="nav-link" href="#!">Logout</Link>
-                                </li>
+                                    <React.Fragment>
+                                        <li className="nav-item active">
+                                            <Link className="nav-link" to="#">{store.state.userName}</Link>
+                                        </li>
+                                        <li className="nav-item active">
+                                            <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link to="/logout" onClick={(e) => this.handleLogout(e, store)} className="nav-link" href="#!">Logout</Link>
+                                        </li>
+                                    </React.Fragment>
+                                ) : (
+                                        <React.Fragment>
+                                            <li className="nav-item">
+                                                <Link to="/login" className="nav-link" href="#!">Login</Link>
+                                            </li>
+                                            <li className="nav-item">
+                                                <Link to="/register" className="nav-link" href="#!">Register</Link>
+                                            </li>
+                                        </React.Fragment>
+                                    )}
+
                             </ul>
                         </div>
                     </nav>
