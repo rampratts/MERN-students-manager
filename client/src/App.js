@@ -9,7 +9,6 @@ import { Provider } from "./context";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import Test from "./components/Test";
 
 class App extends Component {
 
@@ -23,7 +22,6 @@ class App extends Component {
               <Switch>
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <Route exact path="/test" component={Test} />
               </Switch>
             </div>
           </div>

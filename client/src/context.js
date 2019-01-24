@@ -6,7 +6,7 @@ export class Provider extends Component {
     state = {
         loggedIn: false,
         userName: "",
-        userEmail: ""
+        userEmail: "",
     }
 
     verifyToken = async () => {
@@ -35,22 +35,28 @@ export class Provider extends Component {
 
     componentDidMount = () => {
         this.verifyToken()
-            .then(res => this.setState({
-                userName: res.userName,
-                userEmail: res.userEmail,
-                loggedIn: res.loggedIn
-            }))
+            .then(res => {
+                if (!res) return null
+                this.setState({
+                    userName: res.userName,
+                    userEmail: res.userEmail,
+                    loggedIn: res.loggedIn
+                })
+            }
+            )
             .catch(err => console.log(err))
     }
 
 
     componentDidUpdate = async () => {
         this.verifyToken()
-            .then(res => this.setState({
-                userName: res.userName,
-                userEmail: res.userEmail,
-                loggedIn: res.loggedIn
-            }))
+            .then(res => {
+                if (!res) return null
+                this.setState({
+                    userName: res.userName,
+                    userEmail: res.userEmail,
+                })
+            })
             .catch(err => console.log(err))
     }
 
@@ -59,7 +65,11 @@ export class Provider extends Component {
             <Context.Provider value={{
                 state: this.state,
                 logIn: () => this.setState({ loggedIn: true }),
-                logOut: () => this.setState({ loggedIn: false })
+                logOut: () => this.setState({
+                    userName: "",
+                    userEmail: "",
+                    loggedIn: false
+                })
             }}>
                 {this.props.children}
             </Context.Provider>
