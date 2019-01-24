@@ -9,6 +9,7 @@ import { Provider } from "./context";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Home from "./components/Home";
 
 class App extends Component {
 
@@ -20,6 +21,7 @@ class App extends Component {
             <Navbar />
             <div className="container">
               <Switch>
+                <Route exact path="/" component={Home} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
               </Switch>
