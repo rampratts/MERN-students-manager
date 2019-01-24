@@ -1,30 +1,34 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 
+//Provider
+import { Provider } from "./context";
+
+//Components
+import Navbar from "./components/Navbar";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Test from "./components/Test";
+
 class App extends Component {
-  state = {
-    message: ""
-  }
-
-  componentDidMount() {
-    this.getMessage()
-      .then(res => { this.setState({ message: res.message }) })
-      .catch(err => console.log(err))
-  }
-
-  getMessage = async () => {
-    const response = await fetch("/api/index");
-    const body = await response.json();
-
-    // if (response !== 200) throw Error(body.message);
-    return body;
-  }
 
   render() {
     return (
-      <div className="App">
-        <h1>{this.state.message}</h1>
-      </div>
+      <Provider>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <div className="container">
+              <Switch>
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/test" component={Test} />
+              </Switch>
+            </div>
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }

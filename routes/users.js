@@ -13,15 +13,16 @@ const { SecretKey } = require("../config/keys");
 //Login middleware
 const { authRequired } = require("../middleware/auth");
 
-router.post("/test", authRequired, (req, res) => {
+router.post("/verifyToken", authRequired, (req, res) => {
     jwt.verify(req.token, SecretKey, (err, data) => {
         if (err) {
             res.send(err);
         }
 
         res.send({
-            message: "Logged in!",
-            data
+            success: true,
+            name: data.user.name,
+            email: data.user.email
         })
     })
 })
@@ -49,11 +50,7 @@ router.post("/login", (req, res) => {
 
 //User registration
 router.post("/register", (req, res) => {
-    const { name, email, password, password2 } = req.body;
-
-    if (password !== password2) {
-        res.send({ error: "Passwords don't match" })
-    }
+    const { name, email, password } = req.body;
 
     const newUser = new User({
         name,
