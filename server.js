@@ -20,5 +20,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/index", require("./routes/index"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/students", require("./routes/students"));
+app.use("/api/courses", require("./routes/courses"));
 
 app.listen(port, () => console.log("🌎 server is up on " + port));
