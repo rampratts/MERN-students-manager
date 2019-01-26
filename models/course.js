@@ -8,7 +8,8 @@ const CourseSchema = new Schema({
     },
     students: [{
         type: Schema.Types.ObjectId,
-        ref: "Student"
+        ref: "Student",
+        unique: true
     }]
 })
 

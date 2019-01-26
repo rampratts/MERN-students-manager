@@ -16,8 +16,16 @@ const StudentSchema = new Schema({
         trim: true,
     },
     courses: [{
-        type: Schema.Types.ObjectId,
-        ref: "Course"
+        courseId: {
+            type: Schema.Types.ObjectId,
+            ref: "Course"
+        },
+        marks: {
+            type: Number
+        },
+        maxMarks: {
+            type: Number
+        }
     }]
 });
 
