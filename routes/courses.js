@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 
 //Load course model
 const Course = require("../models/course");
@@ -10,6 +9,8 @@ const Student = require("../models/student");
 
 //Load auth middleawre
 const { authRequired } = require("../middleware/auth");
+
+
 
 //Add course to database
 router.post("/add", authRequired, (req, res) => {
@@ -64,14 +65,28 @@ router.patch("/addStudents", authRequired, async (req, res) => {
     const updatedCourse = await Course.findByIdAndUpdate(courseId, { $push: { students: filteredStudents } })
 
     //Add the course to each student.courses[]
-    filteredStudents.forEach(async student => {
-        const updatedStudent = await Student.findByIdAndUpdate(student, { $push: { courses: { courseId } } })
-    });
+    filteredStudents.forEach(async student =>
+        await Student.updateOne({ _id: student._id }, { $push: { courses: { courseId } } })
+    );
 
     //Send the updated course
     res.send({
         updatedCourse
     })
 })
+
+//Get Students from the course
+router.get("/students/:id", authRequired, async (req, res) => {
+    const { id } = req.params;
+
+    const students = await Student.find();
+
+    const filteredStudents = students.filter(
+        student => student.courses.some(course => course.courseId.toString() === id.toString())
+    )
+
+
+    res.send({ filteredStudents })
+});
 
 module.exports = router;
