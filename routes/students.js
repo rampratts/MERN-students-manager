@@ -54,6 +54,7 @@ router.patch("/", authRequired, async (req, res) => {
     let updatedCourse = {}
     let courseIndex = -1;
 
+    //Update marks if needed
     if (courses) {
         courseIndex = updatedCourses.findIndex(course => course.courseId.toString() === courses.id.toString());
         updatedCourse = updatedCourses.splice(courseIndex, 1);
@@ -62,6 +63,7 @@ router.patch("/", authRequired, async (req, res) => {
         updatedCourses.push(updatedCourse[0]);
     }
 
+    //Create a new updated student
     const updatedStudent = {
         name: name ? name : originalStudent.name,
         email: email ? email : originalStudent.email,

@@ -1,15 +1,14 @@
+require("./config/config");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const app = express()
-const port = process.env.PORT || 5000;
-
-//Get the db URI
-const { MongoURI } = require("./config/keys");
+const port = process.env.PORT;
 
 //Connect to MongoDB
-mongoose.connect(MongoURI, { useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
     .then(() => console.log("Connected to database 💾"))
     .catch(err => console.log(err));
 
@@ -23,3 +22,5 @@ app.use("/api/students", require("./routes/students"));
 app.use("/api/courses", require("./routes/courses"));
 
 app.listen(port, () => console.log("🌎 server is up on " + port));
+
+module.exports = { app };

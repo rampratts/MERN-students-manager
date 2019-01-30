@@ -22,9 +22,6 @@ const StudentSchema = new Schema({
         },
         marks: {
             type: Number
-        },
-        maxMarks: {
-            type: Number
         }
     }]
 });

@@ -6,7 +6,9 @@
   "scripts": {
     "client": "cd client && npm start",
     "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha tests/*.test.js --timeout=3000",
+    "test-watch": "nodemon --exec 'npm test'"
   },
   "repository": {
     "type": "git",
@@ -28,5 +30,10 @@
     "nodemon": "^1.18.9",
     "sweetalert2": "^8.0.1",
     "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "expect": "^24.0.0",
+    "mocha": "^5.2.0",
+    "supertest": "^3.4.2"
   }
 }
