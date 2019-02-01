@@ -1,9 +1,11 @@
 const { ObjectID } = require("mongodb");
+const bcrypt = require("bcrypt");
 
 const User = require("../../models/user");
 
 const userOneId = new ObjectID();
 const userTwoId = new ObjectID();
+
 
 //Create testing users
 const users = [{
@@ -19,9 +21,19 @@ const users = [{
     password: "userTwoPass",
 }]
 
+//Encrypt passwords
+bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(users[0].password, salt, (err, hash) => {
+        users[0].password = hash;
+    })
+
+    bcrypt.hash(users[1].password, salt, (err, hash) => {
+        users[1].password = hash;
+    })
+})
 
 const populateUsers = (done) => {
-    User.remove({}).then(() => {
+    User.deleteMany({}).then(() => {
         var userOne = new User(users[0]).save();
         var userTwo = new User(users[1]).save();
 

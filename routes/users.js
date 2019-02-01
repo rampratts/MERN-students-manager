@@ -32,6 +32,14 @@ router.post("/login", (req, res) => {
     const { email, password } = req.body;
 
     User.findOne({ email }).then(user => {
+        if (!user) {
+            res.status(404).send({
+                success: false,
+                error: "Incorrect email"
+            });
+            return;
+        }
+
         bcrypt.compare(password, user.password).then(match => {
             if (!match) {
                 res.status(400).send({
@@ -41,7 +49,7 @@ router.post("/login", (req, res) => {
             }
 
             jwt.sign({ user }, SecretKey, (err, token) => {
-                res.send({ token });
+                res.status(200).send({ token });
             })
         }).catch(err => res.send(err))
     })

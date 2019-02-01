@@ -1,7 +1,5 @@
 const expect = require("expect");
 const request = require("supertest");
-const jwt = require("jsonwebtoken");
-const { SecretKey, TokenPrefix } = require("../config/keys");
 
 const { app } = require("../server");
 
@@ -65,4 +63,47 @@ describe("POST /users/register", () => {
             })
             .end(done);
     });
+})
+
+describe("POST /users/login", () => {
+    //Valid user
+    const email = users[0].email;
+    const password = users[0].password;
+    const invalidPassword = "invalidpassword";
+
+    it("should login the user and return token", done => {
+        request(app)
+            .post("/api/users/login")
+            .send({ email, password })
+            .expect(200)
+            .expect(res => {
+                expect(res.body.token).toBeTruthy();
+            })
+            .end(done);
+    })
+
+    it("should not login the user if password is invalid", done => {
+        request(app)
+            .post("/api/users/login")
+            .send({ email, password: invalidPassword })
+            .expect(400)
+            .expect(res => {
+                expect(res.body.success).toBe(false);
+                expect(res.body.token).toBeFalsy();
+            })
+            .end(done);
+    })
+
+
+    it("should not login the user if email is invalid", done => {
+        request(app)
+            .post("/api/users/login")
+            .send({ email: "invalidemail", password })
+            .expect(404)
+            .expect(res => {
+                expect(res.body.success).toBe(false);
+                expect(res.body.token).toBeFalsy();
+            })
+            .end(done);
+    })
 })
