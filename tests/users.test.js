@@ -11,11 +11,19 @@ const User = require("../models/user");
 beforeEach(populateUsers)
 
 describe("POST /users/register", () => {
+    //Valid data
     const name = "Test"
     const email = "example@test.com";
     const password = "validPassword";
 
-    it("should create a new user", (done) => {
+    //Invalid data
+    const invalidEmail = "test";
+    const invalidPass = "123";
+
+    //Existing data
+    const existingEmail = users[0].email;
+
+    it("should create a new user", done => {
         request(app)
             .post("/api/users/register")
             .send({ name, email, password })
@@ -35,4 +43,26 @@ describe("POST /users/register", () => {
             })
 
     })
+
+    it("should not create user if invalid data", done => {
+        request(app)
+            .post("/api/users/register")
+            .send({ name, email: invalidEmail, password: invalidPass })
+            .expect(400)
+            .expect(res => {
+                expect(res.body.user).toBeFalsy();
+            })
+            .end(done);
+    });
+
+    it("should not create user if email already exists", done => {
+        request(app)
+            .post("/api/users/register")
+            .send({ name, email: existingEmail, password })
+            .expect(400)
+            .expect(res => {
+                expect(res.body.user).toBeFalsy();
+            })
+            .end(done);
+    });
 })

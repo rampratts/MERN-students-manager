@@ -34,7 +34,7 @@ router.post("/login", (req, res) => {
     User.findOne({ email }).then(user => {
         bcrypt.compare(password, user.password).then(match => {
             if (!match) {
-                res.send({
+                res.status(400).send({
                     success: false,
                     error: "Incorrect password"
                 });
@@ -69,7 +69,7 @@ router.post("/register", (req, res) => {
                         user
                     })
                 })
-                .catch(err => res.send(err))
+                .catch(err => res.status(400).send(err))
         })
     })
 
