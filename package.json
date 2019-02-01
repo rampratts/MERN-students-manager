@@ -7,7 +7,7 @@
     "client": "cd client && npm start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha tests/*.test.js --timeout=3000",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha tests/*.test.js --timeout=5000",
     "test-watch": "nodemon --exec 'npm test'"
   },
   "repository": {
@@ -26,6 +26,7 @@
     "concurrently": "^4.1.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
+    "mongodb": "^3.1.13",
     "mongoose": "^5.4.6",
     "nodemon": "^1.18.9",
     "sweetalert2": "^8.0.1",
