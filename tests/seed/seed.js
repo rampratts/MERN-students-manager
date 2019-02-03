@@ -2,10 +2,12 @@ const { ObjectID } = require("mongodb");
 const bcrypt = require("bcrypt");
 
 const User = require("../../models/user");
+const Student = require("../../models/student");
 
 const userOneId = new ObjectID();
 const userTwoId = new ObjectID();
-
+const studentId = new ObjectID();
+const courseId = new ObjectID();
 
 //Create testing users
 const users = [{
@@ -34,11 +36,32 @@ bcrypt.genSalt(10, (err, salt) => {
 
 const populateUsers = (done) => {
     User.deleteMany({}).then(() => {
-        var userOne = new User(users[0]).save();
-        var userTwo = new User(users[1]).save();
+        const userOne = new User(users[0]).save();
+        const userTwo = new User(users[1]).save();
 
         return Promise.all([userOne, userTwo]);
     }).then(() => done());
 }
 
-module.exports = { users, populateUsers };
+//Students seed
+
+const students = [{
+    _id: studentId,
+    name: "Pedro",
+    email: "pedro@gmail.com",
+    phone: "0964561",
+    courses: [{
+        courseId
+    }]
+}]
+
+const populateStudents = done => {
+    Student.deleteMany({}).then(() => {
+        const studentOne = new Student(students[0]).save()
+
+        return Promise.all([studentOne]);
+    }).then(() => done());
+}
+
+
+module.exports = { users, populateUsers, students, populateStudents };
