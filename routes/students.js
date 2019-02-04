@@ -70,8 +70,10 @@ router.patch("/", authRequired, async (req, res) => {
         phone: phone ? phone : originalStudent.phone,
     }
 
-    const response = await Student.findByIdAndUpdate(id, {
-        updatedStudent,
+    const response = await Student.findOneAndUpdate({ _id: id }, {
+        name: updatedStudent.name,
+        email: updatedStudent.email,
+        phone: updatedStudent.phone,
         "$set": {
             courses: updatedCourses
         }

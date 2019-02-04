@@ -11,6 +11,8 @@ const port = process.env.PORT;
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
     .then(() => console.log("Connected to database 💾"))
     .catch(err => console.log(err));
+mongoose.set('useFindAndModify', false);
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

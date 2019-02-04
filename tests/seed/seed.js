@@ -6,7 +6,8 @@ const Student = require("../../models/student");
 
 const userOneId = new ObjectID();
 const userTwoId = new ObjectID();
-const studentId = new ObjectID();
+const studentOneId = new ObjectID();
+const studentTwoId = new ObjectID();
 const courseId = new ObjectID();
 
 //Create testing users
@@ -46,10 +47,19 @@ const populateUsers = (done) => {
 //Students seed
 
 const students = [{
-    _id: studentId,
+    _id: studentOneId,
     name: "Pedro",
     email: "pedro@gmail.com",
     phone: "0964561",
+    courses: [{
+        courseId
+    }]
+},
+{
+    _id: studentTwoId,
+    name: "María",
+    email: "maría@gmail.com",
+    phone: "12312",
     courses: [{
         courseId
     }]
@@ -58,8 +68,9 @@ const students = [{
 const populateStudents = done => {
     Student.deleteMany({}).then(() => {
         const studentOne = new Student(students[0]).save()
+        const studentTwo = new Student(students[1]).save()
 
-        return Promise.all([studentOne]);
+        return Promise.all([studentOne, studentTwo]);
     }).then(() => done());
 }
 
